@@ -1,0 +1,15 @@
+from bs4 import BeautifulSoup
+
+# Load the HTML content
+file_path = '/mnt/data/favorites_6_10_24.html'
+with open(file_path, 'r', encoding='utf-8') as file:
+    soup = BeautifulSoup(file, 'html.parser')
+
+# Extract titles and links under "COOL PROJECTS"
+cool_projects = soup.find('h3', text='COOL PROJECTS')
+cool_projects_links = cool_projects.find_next('dl').find_all('a') if cool_projects else []
+
+# Prepare the list of titles and links
+extracted_links = [{'title': link.text, 'url': link['href']} for link in cool_projects_links]
+
+extracted_links
